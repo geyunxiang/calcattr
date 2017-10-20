@@ -53,7 +53,10 @@ function xz_inter_region_person(infolder, curperson, weakstrong, netthreshold, t
     
     % --- Construct the Whole brain network---
     Num = unique(templateLong)'; % select the unique value in the template column vector
-    Num = Num(2:83); % abandon the first element (zero)
+    % Num(1) = 0 means non-brain areas
+    % here we add this to the matrix to calculate noise as correlation between
+    % the mean of non-brain voxels and each brain region
+    Num = Num(1:83);
     % Brodmann does not contain brain region 12-16, 31, 33, 49, 50, 62-66, 81, 83
     % count up to 98
     % size(Num, 2) = 82, i.e. 82 different brain regions
@@ -66,7 +69,8 @@ function xz_inter_region_person(infolder, curperson, weakstrong, netthreshold, t
     % To this point, nodes of brain network are built
     % and stored in WholeNode
     % data diagram of WholeNode:
-    % COL1  COL2    COL3    ...
+    %       COL1  COL2    COL3    ...
+    % BA0   ...
     % BA1   AVE1    AVE2    ...
     % BA2   ...
     % BA3   ...
@@ -76,7 +80,14 @@ function xz_inter_region_person(infolder, curperson, weakstrong, netthreshold, t
     % Taking the transpose, each column is the brain region average signal time series
     % Here calculate the Pearson correlation coefficients between each brain regions (each column of WholeNode')
     % with # time points observations(each row of WholeNode' is an observation)
+    % Note the first row/column is the correlation between noise signal and each brain region
     [WholeCor, WholeP] = corrcoef(WholeNode');
+    % save the correlation to file
+    fnameWholeCor = fullfile(attr_folder, 'inter-region-WholeCor-withnoise.mat');
+    save(fnameWholeCor, 'WholeCor');
+
+    % split out noise correlation and store the correlation between brain regions separately
+    WholeCor = WholeCor(2:end, 2:end);
     % save the correlation to file
     fnameWholeCor = fullfile(attr_folder, 'inter-region-WholeCor.mat');
     save(fnameWholeCor, 'WholeCor');
