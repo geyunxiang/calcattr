@@ -20,28 +20,24 @@ atlasfname = xzconfig.Atlasfname;
 
 fprintf('please wait...\n');
 
-% inter-region, fast
-
-if itemcks(1)==1
+% inter-region
+if itemcks(1) == 1
 	fprintf(1, '%s --- calculating inter region attrs...\n', datetime)
-    xz_inter_region(folder1name,folder1people,atlasfname);
-    xz_inter_region(folder2name,folder2people,atlasfname);
-    fprintf(1, '%s --- inter region attrs finished...\n', datetime)
+    xz_inter_region(folder1name, folder1people, atlasfname);
+    xz_inter_region(folder2name, folder2people, atlasfname);
+    fprintf(1, '%s --- inter region attrs calculation finished...\n', datetime)
 end
 
-
-% intra-region, slow
-
-if itemcks(2)==1
+% intra-region
+if itemcks(2) == 1
 	fprintf(1, '%s --- calculating intra region attrs...\n', datetime)
-    xz_intra_region(folder1name,folder1people,atlasfname);
-    xz_intra_region(folder2name,folder2people,atlasfname);
-    fprintf(1, '%s --- intra region attrs finished...\n', datetime)
+    xz_intra_region(folder1name, folder1people, atlasfname);
+    xz_intra_region(folder2name, folder2people, atlasfname);
+    fprintf(1, '%s --- intra region attrs calculation finished...\n', datetime)
 end
 
-
-%inter-voxel
-if itemcks(3)==1
+% inter-voxel, not implemented yet
+if itemcks(3) == 1
 	fprintf(1, 'Currently inter-voxel calculation is not implemented.\n');
 end
 

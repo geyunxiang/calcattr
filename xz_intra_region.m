@@ -4,7 +4,6 @@ function xz_intra_region(infolder,inpeople,fnametemplate)
     if isempty(infolder) || isempty(inpeople)
         return;
     end
-
     templateNii = load_nii(fnametemplate);
     templateImg = templateNii.img;
     templateSize = size(templateImg);
@@ -13,20 +12,14 @@ function xz_intra_region(infolder,inpeople,fnametemplate)
 
     parfor iperson = 1:size(inpeople, 1)
         curperson = inpeople{iperson, 1};
-        fprintf(1, 'current person: %s\n', curperson);
         curpersonrun = inpeople{iperson, 2};
         if curpersonrun == 0
             continue;
         end
         %xz_intra_region_person(infolder, curperson, 'weak', 0.5);
         xz_intra_region_person(infolder, curperson, 'strong', 0.5, templateLong);
+        fprintf(1, 'person: %s finished\n', curperson);
     end
-    fprintf('-\n');
-    
-    %----------------------------------------------------------------------
-    
-    
-
 end
 
 function xz_intra_region_person(infolder, curperson, weakstrong, netthreshold, templateLong)

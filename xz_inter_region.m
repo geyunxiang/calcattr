@@ -22,9 +22,7 @@ function xz_inter_region(infolder, inpeople, fnametemplate)
     end
     fprintf('inter region finished.\n');
 
-
 %-------------------------------------------------------------------------
-
     function xz_inter_region_person(infolder, curperson, weakstrong, netthreshold)
         person_folder = fullfile(infolder, curperson); % get full path to this person's folder
         niis = dir(fullfile(person_folder, '*.nii')); % list all nii files under the person's folder
@@ -121,10 +119,8 @@ function xz_inter_region(infolder, inpeople, fnametemplate)
             end
         end
         
-
         % convert the thresholded matrix to a sparse matrix
         WholeNet = sparse(WholeCor1);
-
 
         % Whole_c = sum(atanh(WholeCor)*sqrt(230-3), 1);
         % This basically sums up all correlation coefficients of one brain region
@@ -198,7 +194,6 @@ function xz_inter_region(infolder, inpeople, fnametemplate)
         % This is global efficiency.
         Efficiency = efficiency_wei(WholeCor, 0);
 
-
         C = Whole_c';
         BC = Whole_bc;
         CCFS = Whole_ccfs;
@@ -219,9 +214,5 @@ function xz_inter_region(infolder, inpeople, fnametemplate)
 
         fnameattr = fullfile(attr_folder, 'inter-region_wd.csv');
         xzfn_write_simple_csv(fnameattr, curperson, WD);
-        
     end
-
-
 end
-
